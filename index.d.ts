@@ -1,5 +1,5 @@
-/// <reference types="node" />
-
+/// //<reference types="node" />
+/*
 import * as Transport from 'winston-transport';
 
 interface Sqlite3TransportOptions extends Transport.TransportStreamOptions {
@@ -19,4 +19,4 @@ interface Sqlite3TransportInstance extends Transport {
     table: string;
     insert: any;
     new(options?: Sqlite3TransportOptions): Sqlite3TransportInstance;
-}
+}*/
