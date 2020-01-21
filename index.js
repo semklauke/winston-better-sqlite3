@@ -20,12 +20,18 @@ module.exports = class Sqlite3 extends Transport {
         } else {
             this.table_name = 'log';
         }
+
+        if (options.hasOwnProperty('id_column_name')) {
+            this.id_column_name = options.id_column_name;
+        } else {
+            this.id_column_name = 'id';
+        }
         
         this.params = options.params || ['level', 'message'];
         this.insertStmt = `INSERT INTO ${this.table_name} (${this.params.join(', ')}) VALUES (${this.params.map(e => '?').join(', ')})`;
         
         this.columnsTyped = this.params.map(p => { return p + ' TEXT'});
-        this.columnsTyped.unshift("id INTEGER PRIMARY KEY", "timestamp INTEGER DEFAULT (strftime('%s','now'))");
+        this.columnsTyped.unshift(`${this.id_column_name} INTEGER PRIMARY KEY`, `timestamp INTEGER DEFAULT (strftime('%s','now'))`);
         this.table = `CREATE TABLE IF NOT EXISTS ${this.table_name} (${this.columnsTyped.join(', ')})`;
 
         this.db.prepare(this.table).run();
